@@ -7,11 +7,13 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # App title
 st.title("No Worries - Your AI Therapist")
 
-# Initialize session state for chat history
+# Initialize session state for chat history and input
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {"role": "system", "content": "You are Irie, an empathetic AI therapist who helps teenagers manage their worries using CBT techniques. Always respond with compassion, reassurance, and actionable advice to address their concerns."}
     ]
+if "input" not in st.session_state:
+    st.session_state["input"] = ""  # Initialize input field state
 
 # Display chat messages
 for message in st.session_state.messages:
@@ -21,7 +23,7 @@ for message in st.session_state.messages:
         st.write(f"**Irie:** {message['content']}")
 
 # User input
-user_input = st.text_input("What's on your mind?", key="input")
+user_input = st.text_input("What's on your mind?", st.session_state["input"], key="input")
 
 if st.button("Ask Irie"):
     if user_input:
