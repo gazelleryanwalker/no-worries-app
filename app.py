@@ -1,10 +1,10 @@
 import streamlit as st
 import openai
 
-# Set up OpenAI API Key securely
+# Fetch the OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# App title
+# App Title
 st.title("No Worries - Your AI Therapist")
 
 # Chat Interface
@@ -14,7 +14,7 @@ if st.button("Ask Irie"):
     if user_input:
         with st.spinner("Irie is thinking..."):
             try:
-                # Call the OpenAI Chat Completion API
+                # Call the OpenAI GPT-4 API
                 response = openai.ChatCompletion.create(
                     model="gpt-4",
                     messages=[
@@ -23,7 +23,7 @@ if st.button("Ask Irie"):
                     ],
                 )
                 # Display the assistant's response
-                st.success(response.choices[0].message["content"])
+                st.success(response["choices"][0]["message"]["content"])
             except Exception as e:
                 st.error(f"Something went wrong: {e}")
     else:
